@@ -3,17 +3,11 @@ package main
 import (
 	"fmt"
 
-	database "github.com/Lukmanern/go-starter/database/sql-db"
+	user_module "github.com/Lukmanern/go-starter/app/module/user/controller"
 )
 
 // app runner
-
 func main() {
 	fmt.Println("Hellowww World :D")
-	db := database.LoadSQLDatabase()
-	if db == nil {
-		fmt.Println("error")
-	}
-
-	fmt.Println("Hellowww World :D")
+	user_module.PrintName()
 }
