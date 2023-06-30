@@ -1,44 +1,29 @@
 package database
 
 import (
-	"context"
-	"database/sql"
 	"log"
 	"sync"
 
-	_ "github.com/go-sql-driver/mysql"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
+
+	"github.com/Lukmanern/go-starter/config"
 )
-
-type DB interface {
-	Query(query string, args ...interface{}) (*sql.Rows, error)
-	QueryContext(ctx context.Context, query string, args ...interface{}) (*sql.Rows, error)
-	Prepare(query string) (*sql.Stmt, error)
-	PrepareContext(ctx context.Context, query string) (*sql.Stmt, error)
-	Exec(query string, args ...interface{}) (sql.Result, error)
-	ExecContext(ctx context.Context, query string, args ...interface{}) (sql.Result, error)
-	QueryRowContext(ctx context.Context, query string, args ...interface{}) *sql.Row
-}
-
-// TODO: Refactor
-// ADD: more function to check if table is exist or not
 
 var (
-	database     *sql.DB
-	databaseOnce sync.Once
+	gormDatabase     *gorm.DB
+	gormDatabaseOnce sync.Once
 )
 
-func LoadSQLDatabase() *sql.DB {
-	databaseOnce.Do(func() {
+func LoadGormDatabase() *gorm.DB {
+	gormDatabaseOnce.Do(func() {
 		var err error
-		database, err = sql.Open("mysql", "config.Configuration().GetdatabaseURI()")
+		gormDatabase, err = gorm.Open(mysql.Open(config.Configuration().GetDatabaseURI()), &gorm.Config{})
 		if err != nil {
-			log.Panicf("cannot connect to MySQL %s\n", err)
+			log.Panicf("cannot connect to MySQL %s", err)
 		}
-		err = database.Ping()
-		if err != nil {
-			log.Panicf("cannot ping to MySQL %s\n", err)
-		}
+		gormDatabase.Logger = logger.Default.LogMode(logger.Info)
 	})
-
-	return database
+	return gormDatabase
 }

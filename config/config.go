@@ -85,12 +85,14 @@ func Configuration() Config {
 	return cfg
 }
 
+// root:@tcp(localhost:%!s(int=3306))/todo-list?charset=utf8mb4&multiStatements=true&parseTime=true
+// root:@tcp(localhost:3306)/eclinic?charset=utf8mb4&multiStatements=true&parseTime=true
+
 func (c Config) GetDatabaseURI() string {
 	params := "?charset=utf8mb4&multiStatements=true&parseTime=true"
-	databaseURI = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s"+params, c.DBUser,
-		c.DBPassword, c.DBRootHost, c.DBPort, c.DBName)
+	databaseURI = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s"+params, c.DBUser, c.DBPassword, c.DBRootHost, c.DBPort, c.DBName)
 
-	return databaseURI
+	return "root:@tcp(localhost:3306)/todo-list?charset=utf8mb4&multiStatements=true&parseTime=true"
 }
 
 func (c Config) GetPublicKey() []byte {
