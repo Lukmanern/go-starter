@@ -13,5 +13,5 @@ func main() {
 	userController.PrintName()
 
 	conf := config.ReadConfig("./.env")
-	fmt.Println(conf.DBName)
+	fmt.Println(conf)
 }
