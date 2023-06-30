@@ -3,11 +3,15 @@ package main
 import (
 	"fmt"
 
-	user_module "github.com/Lukmanern/go-starter/app/module/user/controller"
+	userController "github.com/Lukmanern/go-starter/app/module/user/controller"
+	"github.com/Lukmanern/go-starter/config"
 )
 
 // app runner
 func main() {
 	fmt.Println("Hellowww World :D")
-	user_module.PrintName()
+	userController.PrintName()
+
+	conf := config.ReadConfig("./.env")
+	fmt.Println(conf.DBName)
 }
