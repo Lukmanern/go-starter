@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	todoEntity "github.com/Lukmanern/go-starter/app/module/todo/entity"
+	"github.com/Lukmanern/go-starter/app/entity"
 	"github.com/Lukmanern/go-starter/config"
 	connector "github.com/Lukmanern/go-starter/database/sql-db"
 )
@@ -16,10 +16,10 @@ func main() {
 	connector.LoadGormDatabase()
 	db := connector.LoadGormDatabase()
 	err := db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").AutoMigrate(
-		&todoEntity.User{},
-		&todoEntity.Todo{},
+		&entity.User{},
+		&entity.Todo{},
 	)
 	if err != nil {
-		log.Panic("\n\n :: -1 :: ", err)
+		log.Panic("error in migration db :", err)
 	}
 }
