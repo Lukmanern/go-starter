@@ -2,7 +2,6 @@ package entity
 
 import (
 	"time"
-	// todoEntity "github.com/Lukmanern/go-starter/app/module/todo/entity"
 )
 
 type User struct {

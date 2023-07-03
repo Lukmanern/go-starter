@@ -2,6 +2,6 @@ package router
 
 import "fmt"
 
-func route() {
+func router() {
 	fmt.Println("this is router package")
 }
